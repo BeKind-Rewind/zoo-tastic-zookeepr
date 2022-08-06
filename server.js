@@ -8,7 +8,7 @@ const app = express();
 
 // to ADD the route referenced above:
 app.get('/api/animals', (req, res) => {
-    res.send('Hello!');
+    res.json(animals);
 });
 
 // chain the listen() method onto our new server
