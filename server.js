@@ -5,7 +5,6 @@ const { animals } = require('./data/animals');
 // setting envar for port in case one is set; if not then use 3001
 const PORT = process.env.PORT || 3001;
 
-
 // instantiate the server
 const app = express();
 
@@ -49,6 +48,11 @@ function filterByQuery(query, animalsArray) {
 }
 
 
+function findById(id, animalsArray) {
+    const result = animalsArray.filter(animal => animal.id === id)[0];
+    return result;
+}
+
 // to ADD the route referenced above:
 app.get('/api/animals', (req, res) => {
     let results = animals;
@@ -57,6 +61,21 @@ app.get('/api/animals', (req, res) => {
     }
         res.json(results);
 });
+
+app.get('/api/animals/:id', (req, res) => {
+    const result = findById(req.params.id, animals);
+    if (result) {
+        res.json(result);
+      } else {
+        res.send(404);
+      }
+  });
+
+// req.query is multifaceted, often combining multiple parameters, whereas req.
+// param is specific to a single property, often intended to retrieve a single record.
+
+
+
 
 // chain the listen() method onto our new server
 app.listen(PORT, () => {
