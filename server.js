@@ -2,6 +2,10 @@ const express = require('express');
 // create a route that the front-end can request data from
 const { animals } = require('./data/animals');
 
+// setting envar for port in case one is set; if not then use 3001
+const PORT = process.env.PORT || 3001;
+
+
 // instantiate the server
 const app = express();
 
@@ -55,7 +59,7 @@ app.get('/api/animals', (req, res) => {
 });
 
 // chain the listen() method onto our new server
-app.listen(3001, () => {
-    console.log(`API server now on port 3001!`);
+app.listen(PORT, () => {
+    console.log(`API server now on port ${PORT}!`);
   });
 
