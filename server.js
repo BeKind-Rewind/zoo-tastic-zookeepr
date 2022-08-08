@@ -14,6 +14,9 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
+// middleware that directs server where to find the public files. Means that all the front-end code 
+// can now be accessed (in public folder) without having a specific server endpoint created for it
+app.use(express.static('public'));
 
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
@@ -133,6 +136,11 @@ app.post('/api/animals', (req, res) => {
         res.json(animal);
     }
   });
+
+// serve the server.js with index.html
+app.get('/', (req, res) => {    
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
 
 
 // chain the listen() method onto our new server
