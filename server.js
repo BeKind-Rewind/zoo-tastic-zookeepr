@@ -137,14 +137,30 @@ app.post('/api/animals', (req, res) => {
     }
   });
 
-// serve the server.js with index.html
+// serve the index.html
 app.get('/', (req, res) => {    
     res.sendFile(path.join(__dirname, './public/index.html'));
 });
+
+// serve the animals.html
+app.get('/animals', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+// serve the zookeepers.html
+app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+
+// adding a catch-all for non-existent page requests
+app.get('*', (req, res) => {
+    // Order of routes matters: the * route should always come last, otherwise, will take precedence over named routes
+    res.sendFile(path.join(__dirname, './public/index.html'));
+  });
 
 
 // chain the listen() method onto our new server
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
-  });
+});
 
